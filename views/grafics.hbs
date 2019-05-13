@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body style="color:rgb(105, 105, 107)">
+      
+<section style="width:100%" >
+
+    <h1 style="margin: 0;line-height:70PX;background-color:rgb(39, 38, 38);font-family: sans-serif">
+        <center><span style="color: blanchedalmond"> Consumo Geral da máquina</span></center></h1>
+    </section>
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+        <script src="https://www.chartjs.org/dist/2.7.1/Chart.js"></script>
+        <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+
+        <section style="width:80%">
+                <canvas class="canvasGraphics" id="usr" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select: none;"></canvas>
+            </section>
+
+            <section style="width:80%">
+                <canvas class="canvasGraphics" id="usr2" style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select: none;"></canvas>
+            </section>  
+
+            <script>
+            let canvas = document.getElementById("usr").getContext("2d");
+            canvas.canvas.width = 1400;
+            canvas.canvas.height = 400;
+
+            let configurationUse = {
+
+                type: 'line',
+        data: {
+        datasets: [{
+            label: "Uso de Disco",
+            type: 'line',
+            borderColor:['rgb(255,140, 0)'],
+            borderWidth:2,
+            //bordercolor:['rgb(255, 0, 0)'],
+            backgroundColor: ['rgb(255,140,0)'],
+            fill: false
+        },{
+            label: "uso de GPU",
+            type: 'line',
+            borderColor:['rgb(255, 255, 0)'],
+            borderWidth:2,
+            backgroundColor: ['rgb(255,255,0)'],
+            fill: false
+        }],
+   
+    },
+    options: {
+        elements:{
+            line:{
+                tension:0
+            }
+        },
+        scales: {
+            xAxes: [{
+                distribution: 'series',
+                ticks: {
+                    beginAtZero: true
+                }
+            }],
+            yAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Consumo'
+                },
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },
+        animation: {
+            duration: 0
+        }
+    }
+};
+
+let use = new Chart(canvas, configurationUse);
+
+let labelUse = 0;
+
+setInterval(function() {
+
+    if (use.data.labels.length == 10 ) {
+    use.data.labels.shift();
+    use.data.datasets[0].data.shift();
+    use.data.datasets[1].data.shift();
+   
+}
+
+    use.data.labels.push(labelUse);
+    use.data.datasets[0].data.push(Math.random()*100);
+    use.data.datasets[1].data.push(Math.random()*100);
+    
+    labelUse++;
+    use.update();}, 500);
+
+    //////////////////////////////////////////////////////////////
+
+    let canvas2 = document.getElementById("usr2").getContext("2d");
+            canvas2.canvas.width = 1500;
+            canvas2.canvas.height = 400;
+
+    let configurationUse2 = {
+        type: 'line',
+        data: {
+        datasets: [{
+            label: "Uso de memória Ram",
+            type: 'line',
+            borderColor:['rgb(255, 0, 0)'],
+            borderWidth:2,
+            backgroundColor: ['rgb(255, 0, 0)'],
+            fill: false
+        },{
+            label: "uso de CPU",
+            type: 'line',
+            borderColor:['rgb(0,255, 0)'],
+            borderWidth:2,
+            backgroundColor: ['rgb(0,255,0)'],
+            fill: false
+        }],
+        },
+        options: {
+        elements:{
+            line:{
+                tension:0
+            }
+        },
+        scales: {
+            xAxes: [{
+                distribution: 'series',
+                ticks: {
+                    beginAtZero: true
+                }
+            }],
+            yAxes: [{
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Consumo'
+                },
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },
+        animation: {
+            duration: 0
+        }
+    }
+};
+
+let use2 = new Chart(canvas2, configurationUse2);
+
+let labelUse2 = 0;
+
+setInterval(function() {
+
+    if (use2.data.labels.length == 10 ) {
+    use2.data.labels.shift();
+    use2.data.datasets[0].data.shift();
+    use2.data.datasets[1].data.shift();
+}
+
+    use2.data.labels.push(labelUse2);
+    use2.data.datasets[0].data.push(Math.random()*100);
+    use2.data.datasets[1].data.push(Math.random()*100);
+    labelUse2++;
+    use2.update();}, 500);
+           
+</script>
+
+</body>
+
+        
+</html>
